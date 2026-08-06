@@ -33,7 +33,7 @@ Grafite non è rivolta specificamente ai minori, ma essendo priva di pubblicità
 
 ## Modifiche a questa informativa
 
-Se in futuro Grafite dovesse introdurre funzionalità che trattano dati in modo diverso (es. un sistema di sfide online con classifica condivisa), questa informativa verrà aggiornata di conseguenza e la nuova versione sarà sempre disponibile a questo stesso indirizzo.
+Se in futuro Grafite dovesse introdurre funzionalità che trattano dati in modo diverso (es. un sistema di sfide online con classifica condivisa), questa informativa verrà aggiornata di conseguenza e la nuova versione sarà sempre disponibile a questo stesso indirizzo. 
 
 ## Contatti
 
