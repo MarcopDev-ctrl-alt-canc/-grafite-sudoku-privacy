@@ -1,6 +1,6 @@
 # Informativa sulla privacy — Grafite
 
-**Ultimo aggiornamento:** 07/08/2026
+**Ultimo aggiornamento:** 08/08/2026
 
 Grafite è un'app di sudoku gratuita, senza pubblicità e senza account. Questa informativa spiega — in modo semplice — quali dati l'app tratta.
 
