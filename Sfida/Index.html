@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Grafite Sudoku — Sfida</title>
+<style>
+  :root {
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F3ECDA;
+    color: #221A0C;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    padding: 24px;
+  }
+  .card {
+    max-width: 420px;
+    width: 100%;
+    background: #FBF7EC;
+    border: 3px solid #7A5A2E;
+    border-radius: 16px;
+    padding: 32px 28px;
+    text-align: center;
+  }
+  .grid-icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 14px;
+  }
+  h1 {
+    font-size: 20px;
+    margin: 0 0 20px;
+  }
+  .tagline {
+    font-size: 24px;
+    font-weight: 700;
+    color: #7A5A2E;
+    margin: 0 0 18px;
+  }
+  .code-pill {
+    display: inline-block;
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 15px;
+    font-weight: 600;
+    background: rgba(122, 90, 46, 0.12);
+    border-radius: 20px;
+    padding: 8px 18px;
+    margin-bottom: 26px;
+    letter-spacing: 0.5px;
+  }
+  .btn {
+    display: block;
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    margin-bottom: 12px;
+  }
+  .btn-primary {
+    background: #7A5A2E;
+    color: #FBF7EC;
+  }
+  .btn-secondary {
+    background: transparent;
+    color: #7A5A2E;
+    border: 2px solid #7A5A2E;
+  }
+  .hint {
+    font-size: 12px;
+    color: #6B5A40;
+    margin-top: 18px;
+    line-height: 1.5;
+  }
+  .fallback-code {
+    font-size: 12px;
+    color: #6B5A40;
+    margin-top: 6px;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <svg class="grid-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="4" y="4" width="56" height="56" rx="6" stroke="#7A5A2E" stroke-width="4.5"/>
+      <line x1="22.7" y1="4" x2="22.7" y2="60" stroke="#7A5A2E" stroke-width="2"/>
+      <line x1="41.3" y1="4" x2="41.3" y2="60" stroke="#7A5A2E" stroke-width="2"/>
+      <line x1="4" y1="22.7" x2="60" y2="22.7" stroke="#7A5A2E" stroke-width="2"/>
+      <line x1="4" y1="41.3" x2="60" y2="41.3" stroke="#7A5A2E" stroke-width="2"/>
+    </svg>
+    <h1>Grafite Sudoku</h1>
+    <div id="challengeBlock" style="display:none">
+      <p class="tagline">Ti sfido a duello!</p>
+      <div class="code-pill" id="codePill"></div>
+    </div>
+    <div id="genericBlock" style="display:none">
+      <p class="tagline">Grafite Sudoku</p>
+    </div>
+    <button class="btn btn-primary" id="openAppBtn">Apri la sfida nell'app</button>
+    <a class="btn btn-secondary" id="storeLink" href="https://play.google.com/store/apps/details?id=com.grafitesoft.grafitesudoku">Scarica su Google Play</a>
+    <p class="hint">
+      Se il pulsante non apre l'app, scaricala dal link qui sopra: dopo l'installazione apri Grafite Sudoku, tocca "Duello" e incolla il codice qui sotto.
+      <span class="fallback-code" id="fallbackCode"></span>
+    </p>
+  </div>
+
+<script>
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var code = params.get('c') || '';
+  var storeUrl = 'https://play.google.com/store/apps/details?id=com.grafitesoft.grafitesudoku';
+
+  if (code) {
+    document.getElementById('challengeBlock').style.display = 'block';
+    document.getElementById('codePill').textContent = code;
+    document.getElementById('fallbackCode').textContent = 'Codice: ' + code;
+  } else {
+    document.getElementById('genericBlock').style.display = 'block';
+    document.getElementById('fallbackCode').textContent = '';
+  }
+
+  var appUrl = code ? ('grafitesudoku://sfida?c=' + encodeURIComponent(code)) : 'grafitesudoku://apri';
+  var fallbackTimer = null;
+
+  function cancelFallback() {
+    if (fallbackTimer) {
+      clearTimeout(fallbackTimer);
+      fallbackTimer = null;
+    }
+  }
+
+  // Se la pagina viene nascosta (l'app ha preso il controllo) non si
+  // manda più su Google Play — evita il rimando allo store quando l'app
+  // è già installata e si è aperta correttamente.
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) cancelFallback();
+  });
+
+  document.getElementById('openAppBtn').addEventListener('click', function () {
+    cancelFallback();
+    window.location.href = appUrl;
+    fallbackTimer = setTimeout(function () {
+      window.location.href = storeUrl;
+    }, 1500);
+  });
+})();
+</script>
+</body>
+</html>
